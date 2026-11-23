@@ -1,0 +1,194 @@
+
+========================================================================
+                       PAGE FAULT ANALYZER
+        Virtual-memory page replacement simulation in C
+              FIFO  |  LRU  |  Optimal comparison
+========================================================================
+NOTE: this is a page-replacement SIMULATOR. It does not measure page
+faults of your running operating system or inspect actual RAM.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Real-world workload scenarios:
+  1) Sequential scan        - file scan / media streaming (loops over 12 pages)
+  2) Repeated access        - database: 80% of requests hit 4 hot pages (+16 cold)
+  3) Random access          - many unrelated apps/tabs (uniform over 20 pages)
+  4) Locality of reference  - desktop multitasking (4-page working set, 85% reuse)
+  5) Memory pressure        - distinct pages = 4 x frames
+Choose scenario (1-5, 0 to cancel): Number of page references (1-200, Enter = 60): Random seed (1-2147483647, Enter = 2024): 
+Scenario selected.
+------------------------------------------------------------------------
+  Scenario         : Memory pressure
+  Real-world model : Memory-constrained device: 12 distinct pages compete for only 3 frames
+  Page references  : 80
+  Distinct pages   : 12
+  Memory frames    : 3
+  Random seed      : 7
+  Reference string:
+    1 10 2 10 3 11 6 4 7 11 5 7 2 1 3 4 8 7 11 6 
+    11 1 3 3 0 4 6 3 3 5 8 1 11 3 5 5 11 4 4 5 
+    4 0 3 1 5 0 0 11 2 7 3 1 9 2 9 6 9 2 11 0 
+    6 1 11 11 2 0 4 1 4 10 3 2 2 8 4 7 8 8 8 5 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=12 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): Number of memory frames (1-20, Enter = 3): Frames set to 4.
+Memory-pressure workload regenerated for 4 frames (16 distinct pages).
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=16 | frames=4
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Memory pressure
+  Real-world model : Memory-constrained device: 16 distinct pages compete for only 4 frames
+  Page references  : 80
+  Distinct pages   : 16
+  Memory frames    : 4
+  Random seed      : 7
+  Reference string:
+    1 6 10 2 3 15 14 8 3 15 13 3 14 1 3 12 12 3 11 10 
+    7 13 15 7 8 8 14 11 7 13 12 9 7 7 13 1 11 4 4 5 
+    12 4 15 9 5 0 12 15 10 3 7 13 5 6 5 6 5 10 15 0 
+    2 9 11 11 14 4 12 1 4 10 11 14 14 0 12 15 8 12 8 13 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Memory pressure | 4 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           80      24       56      0.3000       0.7000    70.00%
+LRU            80      22       58      0.2750       0.7250    72.50%
+Optimal        80      37       43      0.4625       0.5375    53.75%
+----------------------------------------------------------------------
+
+Lowest fault count: Optimal (43 fault(s))
+Fault differences : FIFO - LRU = -2, FIFO - Optimal = +13, LRU - Optimal = +15
+Compulsory (first-touch) faults: 16  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 80 reference(s) for every algorithm
+  [OK] Optimal faults (43) <= FIFO (56) and LRU (58)
+
+--- Interpretation (real-world context) ---
+  * Memory pressure shows what happens when far more pages are in use than there
+    are frames: pages are evicted before they can be reused.
+  * Fault rate of the best practical policy is 70.0%: substantial. More frames
+    would probably reduce faults noticeably (see the frame-capacity experiment).
+  * FIFO had 2 fewer faults than LRU on this input: recency was not a good
+    predictor of reuse here (this is allowed - LRU is not always better).
+  * Optimal needed 43 faults; the best practical policy is 13 faults above this
+    benchmark. Optimal is theoretical: it needs future knowledge that a real OS
+    does not have.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=16 | frames=4
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Memory pressure
+  Real-world model : Memory-constrained device: 16 distinct pages compete for only 4 frames
+  Page references  : 80
+  Distinct pages   : 16
+  Memory frames    : 4
+  Random seed      : 7
+  Reference string:
+    1 6 10 2 3 15 14 8 3 15 13 3 14 1 3 12 12 3 11 10 
+    7 13 15 7 8 8 14 11 7 13 12 9 7 7 13 1 11 4 4 5 
+    12 4 15 9 5 0 12 15 10 3 7 13 5 6 5 6 5 10 15 0 
+    2 9 11 11 14 4 12 1 4 10 11 14 14 0 12 15 8 12 8 13 
+------------------------------------------------------------------------
+Test frame capacities 1..N. N (1-20, Enter = 5): 
+=== Frame-capacity experiment: Memory pressure (80 references, 16 distinct pages) ===
+Cells show faults (change versus the previous capacity).
+
+Frames  FIFO          LRU           Optimal       FIFO-Opt  LRU-Opt   Lowest
+------------------------------------------------------------------------------------
+1       74            74            74            0         0         FIFO, LRU, Optimal
+2       69 (-5)       69 (-5)       59 (-15)      10        10        Optimal
+3       64 (-5)       63 (-6)       51 (-8)       13        12        Optimal
+4       56 (-8)       58 (-5)       43 (-8)       13        15        Optimal
+5       56 (+0)       55 (-3)       38 (-5)       18        17        Optimal
+6       51 (-5)       49 (-6)       34 (-4)       17        15        Optimal
+7       47 (-4)       46 (-3)       30 (-4)       17        16        Optimal
+8       42 (-5)       43 (-3)       27 (-3)       15        16        Optimal
+------------------------------------------------------------------------------------
+
+Observations (computed from the table):
+  * LRU had fewer faults than FIFO at 4 capacity(ies), FIFO fewer at 2, tied at 2.
+  * Adding frames never increased the fault count for any algorithm here.
+  * Compulsory faults (distinct pages) = 16: no algorithm can go below this.
+  * [OK] Optimal <= FIFO and LRU at every tested capacity
+  * Optimal is a theoretical benchmark: it requires knowing future references.
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=16 | frames=4
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Thank you for using Page Fault Analyzer. Goodbye!

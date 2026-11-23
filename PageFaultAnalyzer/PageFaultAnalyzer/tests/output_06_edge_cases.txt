@@ -1,0 +1,207 @@
+
+========================================================================
+                       PAGE FAULT ANALYZER
+        Virtual-memory page replacement simulation in C
+              FIFO  |  LRU  |  Optimal comparison
+========================================================================
+NOTE: this is a page-replacement SIMULATOR. It does not measure page
+faults of your running operating system or inspect actual RAM.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Enter page numbers (0-99) separated by spaces or commas, up to 200 references.
+Example: 7 0 1 2 0 3 0 4 2 3 0 3 2
+Sequence (empty line to cancel): 
+Custom sequence accepted.
+------------------------------------------------------------------------
+  Scenario         : Custom sequence
+  Real-world model : User-supplied page reference string
+  Page references  : 1
+  Distinct pages   : 1
+  Memory frames    : 3
+  Reference string:
+    9 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Custom sequence | refs=1 | distinct=1 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): Number of memory frames (1-20, Enter = 3): Frames set to 1.
+
+========================================================================
+ Current: Custom sequence | refs=1 | distinct=1 | frames=1
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Custom sequence
+  Real-world model : User-supplied page reference string
+  Page references  : 1
+  Distinct pages   : 1
+  Memory frames    : 1
+  Reference string:
+    9 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Custom sequence | 1 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO            1       0        1      0.0000       1.0000   100.00%
+LRU             1       0        1      0.0000       1.0000   100.00%
+Optimal         1       0        1      0.0000       1.0000   100.00%
+----------------------------------------------------------------------
+
+Lowest fault count: FIFO, LRU, Optimal (1 fault(s))
+Fault differences : FIFO - LRU = +0, FIFO - Optimal = +0, LRU - Optimal = +0
+Compulsory (first-touch) faults: 1  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 1 reference(s) for every algorithm
+  [OK] Optimal faults (1) <= FIFO (1) and LRU (1)
+
+--- Interpretation (real-world context) ---
+  * Custom sequence: the interpretation below is based only on the numbers.
+  * Frames (1) >= distinct pages (1): every page fits in memory, so each algorithm
+    only suffers the 1 compulsory faults; extra frames would not help.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Custom sequence | refs=1 | distinct=1 | frames=1
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Enter page numbers (0-99) separated by spaces or commas, up to 200 references.
+Example: 7 0 1 2 0 3 0 4 2 3 0 3 2
+Sequence (empty line to cancel): 
+Custom sequence accepted.
+------------------------------------------------------------------------
+  Scenario         : Custom sequence
+  Real-world model : User-supplied page reference string
+  Page references  : 6
+  Distinct pages   : 2
+  Memory frames    : 1
+  Reference string:
+    1 2 1 2 1 2 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Custom sequence | refs=6 | distinct=2 | frames=1
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Custom sequence
+  Real-world model : User-supplied page reference string
+  Page references  : 6
+  Distinct pages   : 2
+  Memory frames    : 1
+  Reference string:
+    1 2 1 2 1 2 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Custom sequence | 1 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO            6       0        6      0.0000       1.0000   100.00%
+LRU             6       0        6      0.0000       1.0000   100.00%
+Optimal         6       0        6      0.0000       1.0000   100.00%
+----------------------------------------------------------------------
+
+Lowest fault count: FIFO, LRU, Optimal (6 fault(s))
+Fault differences : FIFO - LRU = +0, FIFO - Optimal = +0, LRU - Optimal = +0
+Compulsory (first-touch) faults: 2  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 6 reference(s) for every algorithm
+  [OK] Optimal faults (6) <= FIFO (6) and LRU (6)
+
+--- Interpretation (real-world context) ---
+  * Custom sequence: the interpretation below is based only on the numbers.
+  * FIFO and LRU faulted on every reference: pages were evicted just before they
+    were needed again (the classic cyclic-scan pattern with too few frames).
+  * FIFO and LRU tied at 6 faults for this input.
+  * Optimal needed 6 faults; the best practical policy is 0 faults above this
+    benchmark. Optimal is theoretical: it needs future knowledge that a real OS
+    does not have.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Custom sequence | refs=6 | distinct=2 | frames=1
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Thank you for using Page Fault Analyzer. Goodbye!

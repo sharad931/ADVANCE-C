@@ -1,0 +1,24 @@
+
+=== Built-in self-test ===
+Known cases (expected values are standard textbook results):
+  [PASS] Textbook string, 3 frames: FIFO=15 LRU=12 Optimal=9 (expected 15/12/9)
+  [PASS] Belady string, 3 frames: FIFO=9 LRU=10 Optimal=7 (expected 9/10/7)
+  [PASS] Belady string, 4 frames: FIFO=10 LRU=8 Optimal=6 (expected 10/8/6)
+  [PASS] Single reference: FIFO=1 LRU=1 Optimal=1 (expected 1/1/1)
+  [PASS] Same page repeated: FIFO=1 LRU=1 Optimal=1 (expected 1/1/1)
+  [PASS] Single frame: FIFO=4 LRU=4 Optimal=4 (expected 4/4/4)
+  [PASS] More frames than pages: FIFO=3 LRU=3 Optimal=3 (expected 3/3/3)
+
+Invariants on every generated workload (frames 1..20, 3 seeds):
+  [PASS] hits + faults == references, and faults >= distinct pages
+  [PASS] Optimal faults <= FIFO and LRU
+  [PASS] same seed -> identical workload (reproducible)
+
+Input validation:
+  [PASS] rejects non-numeric token
+  [PASS] rejects page number above limit
+  [PASS] rejects negative page number
+  [PASS] rejects empty sequence
+  [PASS] accepts spaces and commas
+
+Self-test summary: 15 passed, 0 failed

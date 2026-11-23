@@ -1,0 +1,283 @@
+
+========================================================================
+                       PAGE FAULT ANALYZER
+        Virtual-memory page replacement simulation in C
+              FIFO  |  LRU  |  Optimal comparison
+========================================================================
+NOTE: this is a page-replacement SIMULATOR. It does not measure page
+faults of your running operating system or inspect actual RAM.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Real-world workload scenarios:
+  1) Sequential scan        - file scan / media streaming (loops over 12 pages)
+  2) Repeated access        - database: 80% of requests hit 4 hot pages (+16 cold)
+  3) Random access          - many unrelated apps/tabs (uniform over 20 pages)
+  4) Locality of reference  - desktop multitasking (4-page working set, 85% reuse)
+  5) Memory pressure        - distinct pages = 4 x frames
+Choose scenario (1-5, 0 to cancel): Number of page references (1-200, Enter = 60): Random seed (1-2147483647, Enter = 2024): 
+Scenario selected.
+------------------------------------------------------------------------
+  Scenario         : Locality of reference
+  Real-world model : Desktop multitasking: 85% of references stay in a 4-page working set that shifts every 12 references
+  Page references  : 60
+  Distinct pages   : 14
+  Memory frames    : 3
+  Random seed      : 7
+  Reference string:
+    8 3 8 9 7 8 9 0 3 9 9 16 7 5 5 7 9 4 5 4 
+    5 4 7 7 6 6 6 8 7 8 7 5 0 8 7 5 12 13 15 12 
+    15 13 14 15 14 15 14 12 18 7 8 9 9 6 9 7 9 8 9 9 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=14 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Locality of reference
+  Real-world model : Desktop multitasking: 85% of references stay in a 4-page working set that shifts every 12 references
+  Page references  : 60
+  Distinct pages   : 14
+  Memory frames    : 3
+  Random seed      : 7
+  Reference string:
+    8 3 8 9 7 8 9 0 3 9 9 16 7 5 5 7 9 4 5 4 
+    5 4 7 7 6 6 6 8 7 8 7 5 0 8 7 5 12 13 15 12 
+    15 13 14 15 14 15 14 12 18 7 8 9 9 6 9 7 9 8 9 9 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Locality of reference | 3 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60      28       32      0.4667       0.5333    53.33%
+LRU            60      28       32      0.4667       0.5333    53.33%
+Optimal        60      37       23      0.6167       0.3833    38.33%
+----------------------------------------------------------------------
+
+Lowest fault count: Optimal (23 fault(s))
+Fault differences : FIFO - LRU = +0, FIFO - Optimal = +9, LRU - Optimal = +9
+Compulsory (first-touch) faults: 14  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 60 reference(s) for every algorithm
+  [OK] Optimal faults (23) <= FIFO (32) and LRU (32)
+
+--- Interpretation (real-world context) ---
+  * Locality of reference approximates programs that keep revisiting recently used
+    memory while their working set slowly moves.
+  * Fault rate of the best practical policy is 53.3%: substantial. More frames
+    would probably reduce faults noticeably (see the frame-capacity experiment).
+  * FIFO and LRU tied at 32 faults for this input.
+  * Optimal needed 23 faults; the best practical policy is 9 faults above this
+    benchmark. Optimal is theoretical: it needs future knowledge that a real OS
+    does not have.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=14 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Real-world workload scenarios:
+  1) Sequential scan        - file scan / media streaming (loops over 12 pages)
+  2) Repeated access        - database: 80% of requests hit 4 hot pages (+16 cold)
+  3) Random access          - many unrelated apps/tabs (uniform over 20 pages)
+  4) Locality of reference  - desktop multitasking (4-page working set, 85% reuse)
+  5) Memory pressure        - distinct pages = 4 x frames
+Choose scenario (1-5, 0 to cancel): Number of page references (1-200, Enter = 60): 
+Scenario selected.
+------------------------------------------------------------------------
+  Scenario         : Sequential scan
+  Real-world model : File scan / media streaming: pages visited in order, looping over 12 pages
+  Page references  : 36
+  Distinct pages   : 12
+  Memory frames    : 3
+  Reference string:
+    0 1 2 3 4 5 6 7 8 9 10 11 0 1 2 3 4 5 6 7 
+    8 9 10 11 0 1 2 3 4 5 6 7 8 9 10 11 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Sequential scan | refs=36 | distinct=12 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Sequential scan
+  Real-world model : File scan / media streaming: pages visited in order, looping over 12 pages
+  Page references  : 36
+  Distinct pages   : 12
+  Memory frames    : 3
+  Reference string:
+    0 1 2 3 4 5 6 7 8 9 10 11 0 1 2 3 4 5 6 7 
+    8 9 10 11 0 1 2 3 4 5 6 7 8 9 10 11 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Sequential scan | 3 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           36       0       36      0.0000       1.0000   100.00%
+LRU            36       0       36      0.0000       1.0000   100.00%
+Optimal        36       6       30      0.1667       0.8333    83.33%
+----------------------------------------------------------------------
+
+Lowest fault count: Optimal (30 fault(s))
+Fault differences : FIFO - LRU = +0, FIFO - Optimal = +6, LRU - Optimal = +6
+Compulsory (first-touch) faults: 12  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 36 reference(s) for every algorithm
+  [OK] Optimal faults (30) <= FIFO (36) and LRU (36)
+
+--- Interpretation (real-world context) ---
+  * A sequential scan (file read, video stream) walks through memory in order and
+    loops; a page is often reused only after many other pages have been touched.
+  * FIFO and LRU faulted on every reference: pages were evicted just before they
+    were needed again (the classic cyclic-scan pattern with too few frames).
+  * FIFO and LRU tied at 36 faults for this input.
+  * Optimal needed 30 faults; the best practical policy is 6 faults above this
+    benchmark. Optimal is theoretical: it needs future knowledge that a real OS
+    does not have.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Sequential scan | refs=36 | distinct=12 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Real-world workload scenarios:
+  1) Sequential scan        - file scan / media streaming (loops over 12 pages)
+  2) Repeated access        - database: 80% of requests hit 4 hot pages (+16 cold)
+  3) Random access          - many unrelated apps/tabs (uniform over 20 pages)
+  4) Locality of reference  - desktop multitasking (4-page working set, 85% reuse)
+  5) Memory pressure        - distinct pages = 4 x frames
+Choose scenario (1-5, 0 to cancel): Number of page references (1-200, Enter = 36): Random seed (1-2147483647, Enter = 7): 
+Scenario selected.
+------------------------------------------------------------------------
+  Scenario         : Memory pressure
+  Real-world model : Memory-constrained device: 12 distinct pages compete for only 3 frames
+  Page references  : 80
+  Distinct pages   : 12
+  Memory frames    : 3
+  Random seed      : 7
+  Reference string:
+    1 10 2 10 3 11 6 4 7 11 5 7 2 1 3 4 8 7 11 6 
+    11 1 3 3 0 4 6 3 3 5 8 1 11 3 5 5 11 4 4 5 
+    4 0 3 1 5 0 0 11 2 7 3 1 9 2 9 6 9 2 11 0 
+    6 1 11 11 2 0 4 1 4 10 3 2 2 8 4 7 8 8 8 5 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=12 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): Number of memory frames (1-20, Enter = 3): Frames set to 5.
+Memory-pressure workload regenerated for 5 frames (20 distinct pages).
+
+========================================================================
+ Current: Memory pressure | refs=80 | distinct=20 | frames=5
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Memory pressure
+  Real-world model : Memory-constrained device: 20 distinct pages compete for only 5 frames
+  Page references  : 80
+  Distinct pages   : 20
+  Memory frames    : 5
+  Random seed      : 7
+  Reference string:
+    17 2 10 14 3 11 14 4 3 3 13 15 18 17 3 12 0 19 3 2 
+    3 13 11 7 16 16 14 15 15 17 0 13 3 11 9 9 11 0 4 1 
+    8 0 19 1 1 4 0 15 6 19 7 5 13 10 5 18 5 10 3 12 
+    14 9 7 15 14 0 8 9 0 2 11 18 14 12 0 7 0 4 0 13 
+------------------------------------------------------------------------
+Test frame capacities 1..N. N (1-20, Enter = 5):   Invalid input: value must be between 1 and 20.
+Test frame capacities 1..N. N (1-20, Enter = 5): 
+[Input closed - exiting.]

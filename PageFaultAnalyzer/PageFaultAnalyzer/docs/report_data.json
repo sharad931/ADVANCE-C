@@ -1,0 +1,621 @@
+{
+ "textbook": {
+  "title": "Comparison: Custom sequence | 3 frames",
+  "rows": [
+   {
+    "alg": "FIFO",
+    "refs": 20,
+    "hits": 5,
+    "faults": 15,
+    "hr": "0.2500",
+    "fr": "0.7500",
+    "pct": "75.00"
+   },
+   {
+    "alg": "LRU",
+    "refs": 20,
+    "hits": 8,
+    "faults": 12,
+    "hr": "0.4000",
+    "fr": "0.6000",
+    "pct": "60.00"
+   },
+   {
+    "alg": "Optimal",
+    "refs": 20,
+    "hits": 11,
+    "faults": 9,
+    "hr": "0.5500",
+    "fr": "0.4500",
+    "pct": "45.00"
+   }
+  ],
+  "lowest": "Optimal (9 fault(s))"
+ },
+ "textbook_metrics": [
+  [
+   "FIFO",
+   "6",
+   "9",
+   "6",
+   "60.0%"
+  ],
+  [
+   "LRU",
+   "6",
+   "6",
+   "3",
+   "75.0%"
+  ],
+  [
+   "Optimal",
+   "6",
+   "3",
+   "0",
+   "100.0%"
+  ]
+ ],
+ "belady": {
+  "rows": [
+   [
+    "1",
+    "12",
+    "12",
+    "12",
+    "0",
+    "0",
+    "FIFO, LRU, Optimal"
+   ],
+   [
+    "2",
+    "12 (+0)",
+    "12 (+0)",
+    "9 (-3)",
+    "3",
+    "3",
+    "Optimal"
+   ],
+   [
+    "3",
+    "9 (-3)",
+    "10 (-2)",
+    "7 (-2)",
+    "2",
+    "3",
+    "Optimal"
+   ],
+   [
+    "4",
+    "10 (+1)",
+    "8 (-2)",
+    "6 (-1)",
+    "4",
+    "2",
+    "Optimal"
+   ],
+   [
+    "5",
+    "5 (-5)",
+    "5 (-3)",
+    "5 (-1)",
+    "0",
+    "0",
+    "FIFO, LRU, Optimal"
+   ],
+   [
+    "6",
+    "5 (+0)",
+    "5 (+0)",
+    "5 (+0)",
+    "0",
+    "0",
+    "FIFO, LRU, Optimal"
+   ]
+  ],
+  "obs": [
+   "LRU had fewer faults than FIFO at 1 capacity(ies), FIFO fewer at 1, tied at 4.",
+   "Fault count INCREASED when a frame was added (1 time(s)):",
+   "Compulsory faults (distinct pages) = 5: no algorithm can go below this.",
+   "[OK] Optimal <= FIFO and LRU at every tested capacity",
+   "Optimal is a theoretical benchmark: it requires knowing future references."
+  ],
+  "title": "Frame-capacity experiment: Custom sequence (12 references, 5 distinct pages)"
+ },
+ "db": {
+  "title": "Comparison: Repeated access (hot set) | 4 frames",
+  "rows": [
+   {
+    "alg": "FIFO",
+    "refs": 60,
+    "hits": 22,
+    "faults": 38,
+    "hr": "0.3667",
+    "fr": "0.6333",
+    "pct": "63.33"
+   },
+   {
+    "alg": "LRU",
+    "refs": 60,
+    "hits": 27,
+    "faults": 33,
+    "hr": "0.4500",
+    "fr": "0.5500",
+    "pct": "55.00"
+   },
+   {
+    "alg": "Optimal",
+    "refs": 60,
+    "hits": 36,
+    "faults": 24,
+    "hr": "0.6000",
+    "fr": "0.4000",
+    "pct": "40.00"
+   }
+  ],
+  "lowest": "Optimal (24 fault(s))"
+ },
+ "db_exp": {
+  "rows": [
+   [
+    "1",
+    "56",
+    "56",
+    "56",
+    "0",
+    "0",
+    "FIFO, LRU, Optimal"
+   ],
+   [
+    "2",
+    "46 (-10)",
+    "48 (-8)",
+    "38 (-18)",
+    "8",
+    "10",
+    "Optimal"
+   ],
+   [
+    "3",
+    "40 (-6)",
+    "38 (-10)",
+    "29 (-9)",
+    "11",
+    "9",
+    "Optimal"
+   ],
+   [
+    "4",
+    "38 (-2)",
+    "33 (-5)",
+    "24 (-5)",
+    "14",
+    "9",
+    "Optimal"
+   ],
+   [
+    "5",
+    "32 (-6)",
+    "29 (-4)",
+    "20 (-4)",
+    "12",
+    "9",
+    "Optimal"
+   ],
+   [
+    "6",
+    "29 (-3)",
+    "26 (-3)",
+    "18 (-2)",
+    "11",
+    "8",
+    "Optimal"
+   ],
+   [
+    "7",
+    "27 (-2)",
+    "21 (-5)",
+    "17 (-1)",
+    "10",
+    "4",
+    "Optimal"
+   ],
+   [
+    "8",
+    "27 (+0)",
+    "20 (-1)",
+    "16 (-1)",
+    "11",
+    "4",
+    "Optimal"
+   ]
+  ],
+  "obs": [
+   "LRU had fewer faults than FIFO at 6 capacity(ies), FIFO fewer at 1, tied at 1.",
+   "Adding frames never increased the fault count for any algorithm here.",
+   "Compulsory faults (distinct pages) = 16: no algorithm can go below this.",
+   "[OK] Optimal <= FIFO and LRU at every tested capacity",
+   "Optimal is a theoretical benchmark: it requires knowing future references."
+  ],
+  "title": "Frame-capacity experiment: Repeated access (hot set) (60 references, 16 distinct pages)"
+ },
+ "overall": [
+  [
+   "Sequential",
+   "60",
+   "12",
+   "60",
+   "60",
+   "45",
+   "Optimal",
+   "tie"
+  ],
+  [
+   "Repeated",
+   "60",
+   "16",
+   "38",
+   "33",
+   "24",
+   "Optimal",
+   "LRU better"
+  ],
+  [
+   "Random",
+   "60",
+   "19",
+   "50",
+   "50",
+   "35",
+   "Optimal",
+   "tie"
+  ],
+  [
+   "Locality",
+   "60",
+   "15",
+   "28",
+   "27",
+   "23",
+   "Optimal",
+   "LRU better"
+  ],
+  [
+   "Pressure",
+   "60",
+   "16",
+   "50",
+   "49",
+   "36",
+   "Optimal",
+   "LRU better"
+  ]
+ ],
+ "overall_blocks": [
+  {
+   "name": "Sequential scan",
+   "info": "Refs=60  Distinct=12  Frames=4",
+   "rows": [
+    [
+     "FIFO",
+     "0",
+     "60",
+     "1.0000"
+    ],
+    [
+     "LRU",
+     "0",
+     "60",
+     "1.0000"
+    ],
+    [
+     "Optimal",
+     "15",
+     "45",
+     "0.7500"
+    ]
+   ],
+   "lowest": "Optimal (45 fault(s))"
+  },
+  {
+   "name": "Repeated access (hot set)",
+   "info": "Refs=60  Distinct=16  Frames=4",
+   "rows": [
+    [
+     "FIFO",
+     "22",
+     "38",
+     "0.6333"
+    ],
+    [
+     "LRU",
+     "27",
+     "33",
+     "0.5500"
+    ],
+    [
+     "Optimal",
+     "36",
+     "24",
+     "0.4000"
+    ]
+   ],
+   "lowest": "Optimal (24 fault(s))"
+  },
+  {
+   "name": "Random access",
+   "info": "Refs=60  Distinct=19  Frames=4",
+   "rows": [
+    [
+     "FIFO",
+     "10",
+     "50",
+     "0.8333"
+    ],
+    [
+     "LRU",
+     "10",
+     "50",
+     "0.8333"
+    ],
+    [
+     "Optimal",
+     "25",
+     "35",
+     "0.5833"
+    ]
+   ],
+   "lowest": "Optimal (35 fault(s))"
+  },
+  {
+   "name": "Locality of reference",
+   "info": "Refs=60  Distinct=15  Frames=4",
+   "rows": [
+    [
+     "FIFO",
+     "32",
+     "28",
+     "0.4667"
+    ],
+    [
+     "LRU",
+     "33",
+     "27",
+     "0.4500"
+    ],
+    [
+     "Optimal",
+     "37",
+     "23",
+     "0.3833"
+    ]
+   ],
+   "lowest": "Optimal (23 fault(s))"
+  },
+  {
+   "name": "Memory pressure",
+   "info": "Refs=60  Distinct=16  Frames=4",
+   "rows": [
+    [
+     "FIFO",
+     "10",
+     "50",
+     "0.8333"
+    ],
+    [
+     "LRU",
+     "11",
+     "49",
+     "0.8167"
+    ],
+    [
+     "Optimal",
+     "24",
+     "36",
+     "0.6000"
+    ]
+   ],
+   "lowest": "Optimal (36 fault(s))"
+  }
+ ],
+ "locality": {
+  "title": "Comparison: Locality of reference | 3 frames",
+  "rows": [
+   {
+    "alg": "FIFO",
+    "refs": 60,
+    "hits": 28,
+    "faults": 32,
+    "hr": "0.4667",
+    "fr": "0.5333",
+    "pct": "53.33"
+   },
+   {
+    "alg": "LRU",
+    "refs": 60,
+    "hits": 28,
+    "faults": 32,
+    "hr": "0.4667",
+    "fr": "0.5333",
+    "pct": "53.33"
+   },
+   {
+    "alg": "Optimal",
+    "refs": 60,
+    "hits": 37,
+    "faults": 23,
+    "hr": "0.6167",
+    "fr": "0.3833",
+    "pct": "38.33"
+   }
+  ],
+  "lowest": "Optimal (23 fault(s))"
+ },
+ "sequential": {
+  "title": "Comparison: Sequential scan | 3 frames",
+  "rows": [
+   {
+    "alg": "FIFO",
+    "refs": 36,
+    "hits": 0,
+    "faults": 36,
+    "hr": "0.0000",
+    "fr": "1.0000",
+    "pct": "100.00"
+   },
+   {
+    "alg": "LRU",
+    "refs": 36,
+    "hits": 0,
+    "faults": 36,
+    "hr": "0.0000",
+    "fr": "1.0000",
+    "pct": "100.00"
+   },
+   {
+    "alg": "Optimal",
+    "refs": 36,
+    "hits": 6,
+    "faults": 30,
+    "hr": "0.1667",
+    "fr": "0.8333",
+    "pct": "83.33"
+   }
+  ],
+  "lowest": "Optimal (30 fault(s))"
+ },
+ "pressure": {
+  "title": "Comparison: Memory pressure | 4 frames",
+  "rows": [
+   {
+    "alg": "FIFO",
+    "refs": 80,
+    "hits": 24,
+    "faults": 56,
+    "hr": "0.3000",
+    "fr": "0.7000",
+    "pct": "70.00"
+   },
+   {
+    "alg": "LRU",
+    "refs": 80,
+    "hits": 22,
+    "faults": 58,
+    "hr": "0.2750",
+    "fr": "0.7250",
+    "pct": "72.50"
+   },
+   {
+    "alg": "Optimal",
+    "refs": 80,
+    "hits": 37,
+    "faults": 43,
+    "hr": "0.4625",
+    "fr": "0.5375",
+    "pct": "53.75"
+   }
+  ],
+  "lowest": "Optimal (43 fault(s))"
+ },
+ "pressure_exp": {
+  "rows": [
+   [
+    "1",
+    "74",
+    "74",
+    "74",
+    "0",
+    "0",
+    "FIFO, LRU, Optimal"
+   ],
+   [
+    "2",
+    "69 (-5)",
+    "69 (-5)",
+    "59 (-15)",
+    "10",
+    "10",
+    "Optimal"
+   ],
+   [
+    "3",
+    "64 (-5)",
+    "63 (-6)",
+    "51 (-8)",
+    "13",
+    "12",
+    "Optimal"
+   ],
+   [
+    "4",
+    "56 (-8)",
+    "58 (-5)",
+    "43 (-8)",
+    "13",
+    "15",
+    "Optimal"
+   ],
+   [
+    "5",
+    "56 (+0)",
+    "55 (-3)",
+    "38 (-5)",
+    "18",
+    "17",
+    "Optimal"
+   ],
+   [
+    "6",
+    "51 (-5)",
+    "49 (-6)",
+    "34 (-4)",
+    "17",
+    "15",
+    "Optimal"
+   ],
+   [
+    "7",
+    "47 (-4)",
+    "46 (-3)",
+    "30 (-4)",
+    "17",
+    "16",
+    "Optimal"
+   ],
+   [
+    "8",
+    "42 (-5)",
+    "43 (-3)",
+    "27 (-3)",
+    "15",
+    "16",
+    "Optimal"
+   ]
+  ],
+  "obs": [
+   "LRU had fewer faults than FIFO at 4 capacity(ies), FIFO fewer at 2, tied at 2.",
+   "Adding frames never increased the fault count for any algorithm here.",
+   "Compulsory faults (distinct pages) = 16: no algorithm can go below this.",
+   "[OK] Optimal <= FIFO and LRU at every tested capacity",
+   "Optimal is a theoretical benchmark: it requires knowing future references."
+  ],
+  "title": "Frame-capacity experiment: Memory pressure (80 references, 16 distinct pages)"
+ },
+ "selftest": [
+  "[PASS] Textbook string, 3 frames: FIFO=15 LRU=12 Optimal=9 (expected 15/12/9)",
+  "[PASS] Belady string, 3 frames: FIFO=9 LRU=10 Optimal=7 (expected 9/10/7)",
+  "[PASS] Belady string, 4 frames: FIFO=10 LRU=8 Optimal=6 (expected 10/8/6)",
+  "[PASS] Single reference: FIFO=1 LRU=1 Optimal=1 (expected 1/1/1)",
+  "[PASS] Same page repeated: FIFO=1 LRU=1 Optimal=1 (expected 1/1/1)",
+  "[PASS] Single frame: FIFO=4 LRU=4 Optimal=4 (expected 4/4/4)",
+  "[PASS] More frames than pages: FIFO=3 LRU=3 Optimal=3 (expected 3/3/3)",
+  "[PASS] hits + faults == references, and faults >= distinct pages",
+  "[PASS] Optimal faults <= FIFO and LRU",
+  "[PASS] same seed -> identical workload (reproducible)",
+  "[PASS] rejects non-numeric token",
+  "[PASS] rejects page number above limit",
+  "[PASS] rejects negative page number",
+  "[PASS] rejects empty sequence",
+  "[PASS] accepts spaces and commas"
+ ],
+ "selftest_summary": "Self-test summary: 15 passed, 0 failed"
+}

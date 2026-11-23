@@ -1,0 +1,122 @@
+
+========================================================================
+                       PAGE FAULT ANALYZER
+        Virtual-memory page replacement simulation in C
+              FIFO  |  LRU  |  Optimal comparison
+========================================================================
+NOTE: this is a page-replacement SIMULATOR. It does not measure page
+faults of your running operating system or inspect actual RAM.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Real-world workload scenarios:
+  1) Sequential scan        - file scan / media streaming (loops over 12 pages)
+  2) Repeated access        - database: 80% of requests hit 4 hot pages (+16 cold)
+  3) Random access          - many unrelated apps/tabs (uniform over 20 pages)
+  4) Locality of reference  - desktop multitasking (4-page working set, 85% reuse)
+  5) Memory pressure        - distinct pages = 4 x frames
+Choose scenario (1-5, 0 to cancel): Number of page references (1-200, Enter = 60): Random seed (1-2147483647, Enter = 2024): 
+Scenario selected.
+------------------------------------------------------------------------
+  Scenario         : Random access
+  Real-world model : Many unrelated browser tabs/apps: uniformly random pages out of 20
+  Page references  : 50
+  Distinct pages   : 18
+  Memory frames    : 3
+  Random seed      : 99
+  Reference string:
+    15 13 1 18 7 5 17 11 11 7 2 10 6 10 10 3 1 18 17 17 
+    7 2 2 16 3 15 8 15 13 15 3 16 3 1 5 12 11 9 14 10 
+    11 0 0 14 0 11 12 2 17 12 
+------------------------------------------------------------------------
+
+========================================================================
+ Current: Random access | refs=50 | distinct=18 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+------------------------------------------------------------------------
+  Scenario         : Random access
+  Real-world model : Many unrelated browser tabs/apps: uniformly random pages out of 20
+  Page references  : 50
+  Distinct pages   : 18
+  Memory frames    : 3
+  Random seed      : 99
+  Reference string:
+    15 13 1 18 7 5 17 11 11 7 2 10 6 10 10 3 1 18 17 17 
+    7 2 2 16 3 15 8 15 13 15 3 16 3 1 5 12 11 9 14 10 
+    11 0 0 14 0 11 12 2 17 12 
+------------------------------------------------------------------------
+Show step-by-step frame states? [Y/n]: 
+=== Comparison: Random access | 3 frames ===
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           50      12       38      0.2400       0.7600    76.00%
+LRU            50      12       38      0.2400       0.7600    76.00%
+Optimal        50      18       32      0.3600       0.6400    64.00%
+----------------------------------------------------------------------
+
+Lowest fault count: Optimal (32 fault(s))
+Fault differences : FIFO - LRU = +0, FIFO - Optimal = +6, LRU - Optimal = +6
+Compulsory (first-touch) faults: 18  -> faults beyond this are caused by limited frames
+
+Self-check:
+  [OK] hits + faults == 50 reference(s) for every algorithm
+  [OK] Optimal faults (32) <= FIFO (38) and LRU (38)
+
+--- Interpretation (real-world context) ---
+  * Random access resembles many unrelated applications or tabs: there is little
+    pattern for any policy to exploit.
+  * Fault rate of the best practical policy is 76.0%: very high. The 3 frames are
+    far too few for this workload; a real system would be waiting on storage most
+    of the time (thrashing).
+  * FIFO and LRU tied at 38 faults for this input.
+  * Optimal needed 32 faults; the best practical policy is 6 faults above this
+    benchmark. Optimal is theoretical: it needs future knowledge that a real OS
+    does not have.
+  * Note: this is a page-replacement simulator. Real systems also involve caching,
+    working-set tracking, storage latency and allocation policies that are not
+    modelled here.
+
+========================================================================
+ Current: Random access | refs=50 | distinct=18 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Thank you for using Page Fault Analyzer. Goodbye!

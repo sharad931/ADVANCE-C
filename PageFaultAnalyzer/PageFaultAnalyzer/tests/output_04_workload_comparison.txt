@@ -1,0 +1,117 @@
+
+========================================================================
+                       PAGE FAULT ANALYZER
+        Virtual-memory page replacement simulation in C
+              FIFO  |  LRU  |  Optimal comparison
+========================================================================
+NOTE: this is a page-replacement SIMULATOR. It does not measure page
+faults of your running operating system or inspect actual RAM.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): Number of memory frames (1-20, Enter = 3): Page references per workload (1-200, Enter = 60): Random seed (1-2147483647, Enter = 2024): 
+=== Overall workload comparison: 4 frames, 60 references each, seed 42 ===
+
+Workload: Sequential scan
+  Models : File scan / media streaming: pages visited in order, looping over 12 pages
+  Refs=60  Distinct=12  Frames=4
+
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60       0       60      0.0000       1.0000   100.00%
+LRU            60       0       60      0.0000       1.0000   100.00%
+Optimal        60      15       45      0.2500       0.7500    75.00%
+----------------------------------------------------------------------
+Lowest fault count: Optimal (45 fault(s))
+
+Workload: Repeated access (hot set)
+  Models : Database server: 80% of requests hit 4 hot data pages, the rest spread over 16 cold pages
+  Refs=60  Distinct=16  Frames=4
+
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60      22       38      0.3667       0.6333    63.33%
+LRU            60      27       33      0.4500       0.5500    55.00%
+Optimal        60      36       24      0.6000       0.4000    40.00%
+----------------------------------------------------------------------
+Lowest fault count: Optimal (24 fault(s))
+
+Workload: Random access
+  Models : Many unrelated browser tabs/apps: uniformly random pages out of 20
+  Refs=60  Distinct=19  Frames=4
+
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60      10       50      0.1667       0.8333    83.33%
+LRU            60      10       50      0.1667       0.8333    83.33%
+Optimal        60      25       35      0.4167       0.5833    58.33%
+----------------------------------------------------------------------
+Lowest fault count: Optimal (35 fault(s))
+
+Workload: Locality of reference
+  Models : Desktop multitasking: 85% of references stay in a 4-page working set that shifts every 12 references
+  Refs=60  Distinct=15  Frames=4
+
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60      32       28      0.5333       0.4667    46.67%
+LRU            60      33       27      0.5500       0.4500    45.00%
+Optimal        60      37       23      0.6167       0.3833    38.33%
+----------------------------------------------------------------------
+Lowest fault count: Optimal (23 fault(s))
+
+Workload: Memory pressure
+  Models : Memory-constrained device: 16 distinct pages compete for only 4 frames
+  Refs=60  Distinct=16  Frames=4
+
+Algorithm    Refs    Hits   Faults   Hit ratio  Fault ratio   Fault %
+----------------------------------------------------------------------
+FIFO           60      10       50      0.1667       0.8333    83.33%
+LRU            60      11       49      0.1833       0.8167    81.67%
+Optimal        60      24       36      0.4000       0.6000    60.00%
+----------------------------------------------------------------------
+Lowest fault count: Optimal (36 fault(s))
+
+=== Summary of page faults ===
+Workload      Refs Distinct    FIFO    LRU  Optimal  Lowest               FIFO vs LRU
+--------------------------------------------------------------------------------------
+Sequential      60       12      60     60       45  Optimal              tie
+Repeated        60       16      38     33       24  Optimal              LRU better
+Random          60       19      50     50       35  Optimal              tie
+Locality        60       15      28     27       23  Optimal              LRU better
+Pressure        60       16      50     49       36  Optimal              LRU better
+--------------------------------------------------------------------------------------
+[OK] hits + faults == references and Optimal <= FIFO, LRU for every workload
+Optimal is a theoretical benchmark; compare FIFO and LRU for realistic guidance.
+This is a simulation of synthetic workloads, not a measurement of a real system.
+
+========================================================================
+ Current: Locality of reference | refs=60 | distinct=15 | frames=3
+------------------------------------------------------------------------
+  1  Run all algorithms (FIFO, LRU, Optimal)
+  2  Run an individual algorithm
+  3  Select a real-world workload scenario
+  4  Enter a custom page-reference sequence
+  5  Set number of memory frames
+  6  Compare different frame capacities (experiment)
+  7  Compare all workloads (overall report)
+  8  View performance metrics (last analysis)
+  9  Real-world interpretation and limitations
+ 10  Run built-in self-test
+  0  Exit
+========================================================================
+Enter your choice (0-10): 
+Thank you for using Page Fault Analyzer. Goodbye!
